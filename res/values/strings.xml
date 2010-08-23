@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="app_name">Jacksnaps</string>
+  <string name="main_title">Oh please Jacksnap me</string>
+  <string name="fetch_label">Don\'t click this...</string>
+  <string name="about_text">Jacksnaps is snaps, but jacky.
+    You basically don\'t need to know anymore other than Jacksnaps.
+    Thanks.
+  </string>
+  <string name="about_title">About the Jacksnaps</string>
+  <string name="settings_label">Settings</string>
+  <string name="settings_title">Jacksnap Settings</string>
+  <string name="settings_shortcut">s</string>
+  <string name="text_title">Text Mode</string>
+  <string name="text_summary">Get your Jacksnaps in text</string>
+</resources>
