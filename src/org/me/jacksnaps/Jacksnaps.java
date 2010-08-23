@@ -18,10 +18,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.webkit.URLUtil;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,8 +33,6 @@ public class Jacksnaps extends Activity implements OnClickListener {
   private MediaPlayer mp;
   private Context context = this;
   private File jacksnapSoundFile;
-  private File activeFile;
-  private int totalKbRead = 0;
   @Override
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
@@ -86,12 +81,7 @@ public class Jacksnaps extends Activity implements OnClickListener {
       mp.release();
     }
     try {
-//      mp.setDataSource("http://fmlrecovery.com/jacksnaps/raw/js02.wav");
-//      mp.prepare();
-//      mp.start();
-//      downloadJacksnapFromUrl("http://fmlrecovery.com/jacksnaps/raw/js01.ogg");
-//      downloadJacksnapFromUrl("http://www.robtowns.com/music/what_other_child.mp3");
-      audioPath = getDataSource("http://fmlrecovery.com/jacksnaps/raw/js03.mp3");
+      audioPath = getDataSource("http://jacksnaps.s3.amazonaws.com/js03.mp3");
       Log.d("Jacksnaps", "Set Data Source: " + audioPath);
     } catch(java.io.IOException e) {
       Log.e("Jacksnaps", "Error fetching Jacksnap audio!: " + e);
@@ -99,7 +89,6 @@ public class Jacksnaps extends Activity implements OnClickListener {
     try {
       mp = new MediaPlayer();
       mp.setDataSource(audioPath);
-//      mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
       Log.d("Jacksnaps", "About to call Prepare() on file:" + audioPath);
       mp.prepare();
       mp.start();
@@ -118,42 +107,43 @@ public class Jacksnaps extends Activity implements OnClickListener {
 		jacksnapSoundFile = new File(context.getCacheDir(),"jacksnapSoundFile.mp3");
     FileOutputStream out = new FileOutputStream(jacksnapSoundFile);
     byte buf[] = new byte[16384];
-    int totalBytesRead = 0;
     do {
       int numread = stream.read(buf);
         if (numread <= 0)
             break;
         out.write(buf, 0, numread);
-        totalBytesRead += numread;
-        totalKbRead = totalBytesRead/1000;
     } while (true);
     Log.d("Jacksnaps", "jacksnapSoundFile Size(bytes): " + jacksnapSoundFile.length());
     Log.d("Jacksnaps", "jacksnapSoundFile Size(bytes): " + jacksnapSoundFile.getAbsolutePath());
     stream.close();
-//    activeFile = new File("/sdcard/jacksnap.ogg");
-//    moveFile(jacksnapSoundFile, activeFile);
-//    Log.d("Jacksnaps", "Active File Size(bytes): " + activeFile.length());
-//    Log.d("Jacksnaps", "Active File Size(bytes): " + activeFile.getAbsolutePath());
-
-//    if (validateNotInterrupted()) {
-//      fireDataFullyLoaded();
-//    }
   }
 
   	private String getDataSource(String path) throws IOException {
 		if (!URLUtil.isNetworkUrl(path)) {
 			return path;
 		} else {
+      Log.d("Jacksnaps", "getDatSource(): " + path);
 			URL url = new URL(path);
 			URLConnection cn = url.openConnection();
 			cn.connect();
 			InputStream stream = cn.getInputStream();
-			if (stream == null)
+			if (stream == null){
 				throw new RuntimeException("stream is null");
-			File temp = File.createTempFile("jacksnaptmp", "dat");
-			temp.deleteOnExit();
-			String tempPath = temp.getAbsolutePath();
-			FileOutputStream out = new FileOutputStream(temp);
+      }
+      if(jacksnapSoundFile != null) {
+        if(jacksnapSoundFile.exists()) {
+          if(mp != null) {
+            if(mp.isPlaying()) {
+              mp.stop();
+            }
+            mp.release();
+          }
+          jacksnapSoundFile.delete();
+        }
+      }
+      jacksnapSoundFile = File.createTempFile("jacksnap",null);
+			jacksnapSoundFile.deleteOnExit();
+			FileOutputStream out = new FileOutputStream(jacksnapSoundFile);
 			byte buf[] = new byte[128];
 			do {
 				int numread = stream.read(buf);
@@ -166,8 +156,8 @@ public class Jacksnaps extends Activity implements OnClickListener {
 			} catch (IOException ex) {
 				Log.e("Jacksnaps", "Error fetching Jacksnap!: " + ex.getMessage(), ex);
 			}
-      Log.d("Jacksnaps", "Temp File Length(bytes): " + temp.length());
-			return tempPath;
+      Log.d("Jacksnaps", "Temp File Length(bytes): " + jacksnapSoundFile.length());
+			return jacksnapSoundFile.getAbsolutePath();
 		}
 	}
 }
