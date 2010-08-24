@@ -131,16 +131,18 @@ public class Jacksnaps extends Activity implements OnClickListener {
 				throw new RuntimeException("stream is null");
       }
       if(jacksnapSoundFile != null) {
+        Log.d("Jacksnaps","Jacksnap Audio file already initialized");
         if(jacksnapSoundFile.exists()) {
+          Log.d("Jacksnaps","Jacksnaps file found on file system");
           if(mp != null) {
-            if(mp.isPlaying()) {
-              mp.stop();
-            }
+            Log.d("Jacksnaps","Releasing MediaPlayer");
             mp.release();
           }
+          Log.d("Jacksnaps","Deleting Jacksnap audio file");
           jacksnapSoundFile.delete();
         }
       }
+      Log.d("Jacksnaps","Creating a Jacksnap audio file");
       jacksnapSoundFile = File.createTempFile("jacksnap",null);
 			jacksnapSoundFile.deleteOnExit();
 			FileOutputStream out = new FileOutputStream(jacksnapSoundFile);
