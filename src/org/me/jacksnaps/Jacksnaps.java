@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Random;
 
 /**
  *
@@ -74,6 +75,11 @@ public class Jacksnaps extends Activity implements OnClickListener {
     }
   }
 
+  private int getNumHostedJacksnaps() {
+    //TODO: Implement method to return number of Jacksnaps currently served by Amazon CloudFront
+    return 100;
+  }
+
   public void fetchJacksnap() {
     Log.d("Jacksnaps","Fetching Jacksnap!");
     String audioPath = null;
@@ -81,7 +87,9 @@ public class Jacksnaps extends Activity implements OnClickListener {
       mp.release();
     }
     try {
-      audioPath = getDataSource("http://jacksnaps.s3.amazonaws.com/js03.mp3");
+      Random rg = new Random();
+      int suffix = rg.nextInt(getNumHostedJacksnaps());
+      audioPath = getDataSource("http://jacksnaps.s3.amazonaws.com/js" + suffix + ".mp3");
       Log.d("Jacksnaps", "Set Data Source: " + audioPath);
     } catch(java.io.IOException e) {
       Log.e("Jacksnaps", "Error fetching Jacksnap audio!: " + e);
@@ -95,27 +103,6 @@ public class Jacksnaps extends Activity implements OnClickListener {
     } catch(java.io.IOException e) {
       Log.e("Jacksnaps", "Error preparing Jacksnap audio!: " + e);
     }
-  }
-
-  private void downloadJacksnapFromUrl(String url) throws java.io.IOException {
-   	URLConnection cn = new URL(url).openConnection();
-    cn.connect();
-    InputStream stream = cn.getInputStream();
-    if (stream == null) {
-      Log.e(getClass().getName(), "Unable to create InputStream for url:" + url);
-    }
-		jacksnapSoundFile = new File(context.getCacheDir(),"jacksnapSoundFile.mp3");
-    FileOutputStream out = new FileOutputStream(jacksnapSoundFile);
-    byte buf[] = new byte[16384];
-    do {
-      int numread = stream.read(buf);
-        if (numread <= 0)
-            break;
-        out.write(buf, 0, numread);
-    } while (true);
-    Log.d("Jacksnaps", "jacksnapSoundFile Size(bytes): " + jacksnapSoundFile.length());
-    Log.d("Jacksnaps", "jacksnapSoundFile Size(bytes): " + jacksnapSoundFile.getAbsolutePath());
-    stream.close();
   }
 
   	private String getDataSource(String path) throws IOException {

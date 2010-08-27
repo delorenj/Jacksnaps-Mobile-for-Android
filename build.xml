@@ -65,5 +65,10 @@
     properties which you can use, check the target you are overriding in the
     nbproject/build-impl.xml file. 
 
+    <target name="-pre-jar">
+      <copy todir="${build.classes.dir}">
+        <fileset dir="${external.libs.dir}" />
+      </copy>
+    </target>
     -->
 </project>
