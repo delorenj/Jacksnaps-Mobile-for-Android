@@ -3,6 +3,8 @@
   <string name="app_name">Jacksnaps</string>
   <string name="main_title">Oh please Jacksnap me</string>
   <string name="fetch_label">Don\'t click this...</string>
+  <string name="fetch_notice">Fetching Jacksnap...</string>
+  <string name="fetch_error">Error Fetching Jacksnap!</string>
   <string name="about_text">Jacksnaps is snaps, but jacky.
     You basically don\'t need to know anymore other than Jacksnaps.
     Thanks.

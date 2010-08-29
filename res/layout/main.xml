@@ -17,5 +17,12 @@
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       android:text="@string/fetch_label" />
+    <TextView
+      android:id="@+id/jacksnap_caption"
+      android:padding="10dip"
+      android:textSize="18sp"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center" />
   </LinearLayout>
 </LinearLayout>
