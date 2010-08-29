@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package org.me.jacksnaps;
+package org.me.jacksnapsmobile;
 
 import android.preference.PreferenceActivity;
 import android.os.Bundle;

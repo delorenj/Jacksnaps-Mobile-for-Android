@@ -3,14 +3,13 @@
  * and open the template in the editor.
  */
 
-package org.me.jacksnaps;
+package org.me.jacksnapsmobile;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.content.Intent;
-import android.content.Context;
 import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.Menu;
@@ -24,12 +23,6 @@ import java.io.InputStream;
 import java.util.Random;
 import java.net.URL;
 import java.net.URLConnection;
-//import java.text.SimpleDateFormat;
-//import java.util.Date;
-//import java.util.Locale;
-//import java.util.TimeZone;
-//import java.net.HttpURLConnection;
-//import java.net.MalformedURLException;
 
 /**
  *
@@ -37,10 +30,7 @@ import java.net.URLConnection;
  */
 public class Jacksnaps extends Activity implements OnClickListener {
   private MediaPlayer mp;
-  private Context context = this;
   private File jacksnapSoundFile;
-  private String keyId = "AKIAJFUS3NL733ETVELA";
-  private String secretKey = "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";
   @Override
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
@@ -60,9 +50,9 @@ public class Jacksnaps extends Activity implements OnClickListener {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
-    case R.id.settings:
-    startActivity(new Intent(this, Prefs.class));
-    return true;
+//    case R.id.settings:
+//    startActivity(new Intent(this, Prefs.class));
+//    return true;
     case R.id.about:
     startActivity(new Intent(this, About.class));
     return true;
@@ -82,48 +72,6 @@ public class Jacksnaps extends Activity implements OnClickListener {
 
   private int getNumHostedJacksnaps() {
     //TODO: Implement method to return number of Jacksnaps currently served by Amazon CloudFront
-  // S3 timestamp pattern.
-//    String fmt = "EEE, dd MMM yyyy HH:mm:ss ";
-//    SimpleDateFormat df = new SimpleDateFormat(fmt, Locale.US);
-//    df.setTimeZone(TimeZone.getTimeZone("GMT"));
-//
-//    // Data needed for signature
-//    String method = "GET";
-//    String contentMD5 = "";
-//    String contentType = "";
-//    String date = df.format(new Date()) + "GMT";
-//    String bucket = "/jacksnaps";
-//
-//    // Generate signature
-//    StringBuilder buf = new StringBuilder();
-//    buf.append(method).append("\n");
-//    buf.append(contentMD5).append("\n");
-//    buf.append(contentType).append("\n");
-//    buf.append(date).append("\n");
-//    buf.append(bucket);
-//    String signature = sign(buf.toString());
-//
-//    // Connection to s3.amazonaws.com
-//    HttpURLConnection httpConn = null;
-//    URL url = new URL("http","s3.amazonaws.com",80,bucket);
-//    httpConn = (HttpURLConnection) url.openConnection();
-//    httpConn.setDoInput(true);
-//    httpConn.setDoOutput(true);
-//    httpConn.setUseCaches(false);
-//    httpConn.setDefaultUseCaches(false);
-//    httpConn.setAllowUserInteraction(true);
-//    httpConn.setRequestMethod(method);
-//    httpConn.setRequestProperty("Date", date);
-//    httpConn.setRequestProperty("Content-Length", "0");
-//    String AWSAuth = "AWS " + keyId + ":" + signature;
-//    httpConn.setRequestProperty("Authorization", AWSAuth);
-//    // Send the HTTP PUT request.
-//    int statusCode = httpConn.getResponseCode();
-//    if ((statusCode/100) != 2)
-//    {
-//      // Deal with S3 error stream.
-//      Log.e("Jacksnaps", "S3 Error");
-//    }
     return 57;
   }
 

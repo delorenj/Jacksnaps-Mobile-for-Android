@@ -71,4 +71,14 @@
       </copy>
     </target>
     -->
+    <target depends="init,-package-res-and-assets,-package-res-no-assets,-package-dex" name="-no-sign">
+        <exec executable="${apkbuilder}" failonerror="true">
+            <arg value="${basedir}/${dist.apk}-unsigned.apk"/>
+            <arg value="-u"/>
+            <arg value="-z"/>
+            <arg value="${basedir}/${dist.apk}_"/>
+        </exec>
+        <delete file="${dist.apk}_"/>
+    </target>
+    <target depends="init,compile,-pre-jar,-dex,-package-res-and-assets,-package-res-no-assets,-package-dex,-no-sign,-post-jar" description="Export unsigned package" name="unsigned"/>
 </project>

@@ -1,5 +1,5 @@
 
-package org.me.jacksnaps;
+package org.me.jacksnapsmobile;
 
 import android.app.Activity;
 import android.os.Bundle;
