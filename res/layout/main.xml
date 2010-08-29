@@ -17,11 +17,5 @@
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       android:text="@string/fetch_label" />
-    <Button
-      android:id="@+id/about_button"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:text="@string/about_title" />
   </LinearLayout>
 </LinearLayout>

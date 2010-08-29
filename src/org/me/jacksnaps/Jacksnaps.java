@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.content.Intent;
 import android.content.Context;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.Menu;
@@ -22,9 +21,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Random;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Random;
+//import java.text.SimpleDateFormat;
+//import java.util.Date;
+//import java.util.Locale;
+//import java.util.TimeZone;
+//import java.net.HttpURLConnection;
+//import java.net.MalformedURLException;
 
 /**
  *
@@ -34,14 +39,14 @@ public class Jacksnaps extends Activity implements OnClickListener {
   private MediaPlayer mp;
   private Context context = this;
   private File jacksnapSoundFile;
+  private String keyId = "AKIAJFUS3NL733ETVELA";
+  private String secretKey = "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";
   @Override
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
     setContentView(R.layout.main);
     View fetchButton = findViewById(R.id.fetch_button);
     fetchButton.setOnClickListener(this);
-    View aboutButton = findViewById(R.id.about_button);
-    aboutButton.setOnClickListener(this);
   }
 
   @Override
@@ -58,6 +63,10 @@ public class Jacksnaps extends Activity implements OnClickListener {
     case R.id.settings:
     startActivity(new Intent(this, Prefs.class));
     return true;
+    case R.id.about:
+    startActivity(new Intent(this, About.class));
+    return true;
+
     // More items go here (if any) ...
     }
     return false;
@@ -65,10 +74,6 @@ public class Jacksnaps extends Activity implements OnClickListener {
 
   public void onClick(View v) {
     switch (v.getId()) {
-    case R.id.about_button:
-      Intent i = new Intent(this, About.class);
-      startActivity(i);
-      break;
     case R.id.fetch_button:
       fetchJacksnap();
       break;
@@ -77,22 +82,69 @@ public class Jacksnaps extends Activity implements OnClickListener {
 
   private int getNumHostedJacksnaps() {
     //TODO: Implement method to return number of Jacksnaps currently served by Amazon CloudFront
-    return 100;
+  // S3 timestamp pattern.
+//    String fmt = "EEE, dd MMM yyyy HH:mm:ss ";
+//    SimpleDateFormat df = new SimpleDateFormat(fmt, Locale.US);
+//    df.setTimeZone(TimeZone.getTimeZone("GMT"));
+//
+//    // Data needed for signature
+//    String method = "GET";
+//    String contentMD5 = "";
+//    String contentType = "";
+//    String date = df.format(new Date()) + "GMT";
+//    String bucket = "/jacksnaps";
+//
+//    // Generate signature
+//    StringBuilder buf = new StringBuilder();
+//    buf.append(method).append("\n");
+//    buf.append(contentMD5).append("\n");
+//    buf.append(contentType).append("\n");
+//    buf.append(date).append("\n");
+//    buf.append(bucket);
+//    String signature = sign(buf.toString());
+//
+//    // Connection to s3.amazonaws.com
+//    HttpURLConnection httpConn = null;
+//    URL url = new URL("http","s3.amazonaws.com",80,bucket);
+//    httpConn = (HttpURLConnection) url.openConnection();
+//    httpConn.setDoInput(true);
+//    httpConn.setDoOutput(true);
+//    httpConn.setUseCaches(false);
+//    httpConn.setDefaultUseCaches(false);
+//    httpConn.setAllowUserInteraction(true);
+//    httpConn.setRequestMethod(method);
+//    httpConn.setRequestProperty("Date", date);
+//    httpConn.setRequestProperty("Content-Length", "0");
+//    String AWSAuth = "AWS " + keyId + ":" + signature;
+//    httpConn.setRequestProperty("Authorization", AWSAuth);
+//    // Send the HTTP PUT request.
+//    int statusCode = httpConn.getResponseCode();
+//    if ((statusCode/100) != 2)
+//    {
+//      // Deal with S3 error stream.
+//      Log.e("Jacksnaps", "S3 Error");
+//    }
+    return 57;
   }
 
   public void fetchJacksnap() {
     Log.d("Jacksnaps","Fetching Jacksnap!");
+    boolean validAudioFile = false;
     String audioPath = null;
     if(mp != null) {
       mp.release();
     }
-    try {
-      Random rg = new Random();
-      int suffix = rg.nextInt(getNumHostedJacksnaps());
-      audioPath = getDataSource("http://jacksnaps.s3.amazonaws.com/js" + suffix + ".mp3");
-      Log.d("Jacksnaps", "Set Data Source: " + audioPath);
-    } catch(java.io.IOException e) {
-      Log.e("Jacksnaps", "Error fetching Jacksnap audio!: " + e);
+    while(!validAudioFile)
+    {
+      try {
+        Random rg = new Random();
+        int suffix = rg.nextInt(getNumHostedJacksnaps())+1;
+        audioPath = getDataSource("http://jacksnaps.s3.amazonaws.com/js" + suffix + ".mp3");
+        validAudioFile = true;
+        Log.d("Jacksnaps", "Set Data Source: " + audioPath);
+      } catch(java.io.IOException e) {
+        Log.e("Jacksnaps", "Tried to fetch invalid Jacksnap audio file!: " + e);
+      }
     }
     try {
       mp = new MediaPlayer();

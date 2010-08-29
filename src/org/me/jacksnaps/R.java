@@ -17,10 +17,10 @@ public final class R {
         public static final int icon=0x7f020000;
     }
     public static final class id {
-        public static final int about_button=0x7f090002;
+        public static final int about=0x7f090003;
         public static final int about_content=0x7f090000;
         public static final int fetch_button=0x7f090001;
-        public static final int settings=0x7f090003;
+        public static final int settings=0x7f090002;
     }
     public static final class layout {
         public static final int about=0x7f030000;
@@ -30,11 +30,46 @@ public final class R {
         public static final int menu=0x7f080000;
     }
     public static final class raw {
-        public static final int js01=0x7f050000;
-        public static final int js02=0x7f050001;
-        public static final int js03=0x7f050002;
+        public static final int js1=0x7f050000;
+        public static final int js10=0x7f050001;
+        public static final int js11=0x7f050002;
+        public static final int js16=0x7f050003;
+        public static final int js2=0x7f050004;
+        public static final int js20=0x7f050005;
+        public static final int js21=0x7f050006;
+        public static final int js22=0x7f050007;
+        public static final int js23=0x7f050008;
+        public static final int js24=0x7f050009;
+        public static final int js25=0x7f05000a;
+        public static final int js26=0x7f05000b;
+        public static final int js30=0x7f05000c;
+        public static final int js31=0x7f05000d;
+        public static final int js32=0x7f05000e;
+        public static final int js33=0x7f05000f;
+        public static final int js34=0x7f050010;
+        public static final int js35=0x7f050011;
+        public static final int js357=0x7f050012;
+        public static final int js358=0x7f050013;
+        public static final int js359=0x7f050014;
+        public static final int js360=0x7f050015;
+        public static final int js361=0x7f050016;
+        public static final int js362=0x7f050017;
+        public static final int js363=0x7f050018;
+        public static final int js37=0x7f050019;
+        public static final int js38=0x7f05001a;
+        public static final int js40=0x7f05001b;
+        public static final int js41=0x7f05001c;
+        public static final int js44=0x7f05001d;
+        public static final int js45=0x7f05001e;
+        public static final int js46=0x7f05001f;
+        public static final int js47=0x7f050020;
+        public static final int js49=0x7f050021;
+        public static final int js51=0x7f050022;
+        public static final int js54=0x7f050023;
+        public static final int js57=0x7f050024;
     }
     public static final class string {
+        public static final int about_shortcut=0x7f070008;
         public static final int about_text=0x7f070003;
         public static final int about_title=0x7f070004;
         public static final int app_name=0x7f070000;
@@ -43,8 +78,8 @@ public final class R {
         public static final int settings_label=0x7f070005;
         public static final int settings_shortcut=0x7f070007;
         public static final int settings_title=0x7f070006;
-        public static final int text_summary=0x7f070009;
-        public static final int text_title=0x7f070008;
+        public static final int text_summary=0x7f07000a;
+        public static final int text_title=0x7f070009;
     }
     public static final class xml {
         public static final int settings=0x7f040000;
