@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res/org.me.jacksnapsmobile"
      package="org.me.jacksnapsmobile"
-     android:versionCode="2"
-     android:versionName="0.2">
+     android:versionCode="3"
+     android:versionName="1.0">
     <uses-sdk android:minSdkVersion="7"
               android:targetSdkVersion="8" />
     <application android:icon="@drawable/icon"
@@ -21,6 +22,14 @@
       <activity android:name=".Prefs"
         android:label="@string/settings_title" >
       </activity>
+      <!-- The application's publisher ID assigned by AdMob -->
+      <meta-data android:value="a14c7ad18664069" android:name="ADMOB_PUBLISHER_ID" />
+      <!-- Track Market installs -->
+      <receiver android:name="com.admob.android.ads.analytics.InstallReceiver" android:exported="true">
+        <intent-filter>
+          <action android:name="com.android.vending.INSTALL_REFERRER" />
+        </intent-filter>
+      </receiver>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>

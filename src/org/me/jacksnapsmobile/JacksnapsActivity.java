@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.content.Intent;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,16 +19,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
-
-
-
+import com.admob.android.ads.AdManager;
 /**
  *
  * @author delorenj
  */
 public class JacksnapsActivity extends Activity implements OnClickListener {
   private View fetchButton;
-  private TextView jacksnapCaption;
+//  private TextView jacksnapCaption;
   private Handler guiThread;
   private ExecutorService jacksnapRequestThread;
   private Runnable updateRequest;
@@ -38,12 +35,12 @@ public class JacksnapsActivity extends Activity implements OnClickListener {
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
     setContentView(R.layout.main);
+//    AdManager.setTestDevices( new String[] { "9237AEAE1FEDAD90E738A5776A8B07D7" } );
     initThreading();
     findViews();
     setListeners();
-  
   }
-
+  
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     super.onCreateOptionsMenu(menu);
@@ -80,7 +77,7 @@ public class JacksnapsActivity extends Activity implements OnClickListener {
 
   private void findViews() {
     fetchButton = (View) findViewById(R.id.fetch_button);
-    jacksnapCaption = (TextView) findViewById(R.id.jacksnap_caption);
+//    jacksnapCaption = (TextView) findViewById(R.id.jacksnap_caption);
   }
 
   private void setListeners() {
@@ -96,13 +93,13 @@ public class JacksnapsActivity extends Activity implements OnClickListener {
         if (jacksnapRequestPending != null) {
           jacksnapRequestPending.cancel(true);
         }
-        jacksnapCaption.setText(R.string.fetch_notice);
+//        jacksnapCaption.setText(R.string.fetch_notice);
         try {
           JacksnapRequest jacksnapRequest = new JacksnapRequest(JacksnapsActivity.this);
           jacksnapRequestPending = jacksnapRequestThread.submit(jacksnapRequest);
         } catch (RejectedExecutionException e) {
           // Unable to start new task
-          jacksnapCaption.setText(R.string.fetch_error);
+//          jacksnapCaption.setText(R.string.fetch_error);
         }
       }
     };
@@ -119,6 +116,6 @@ public class JacksnapsActivity extends Activity implements OnClickListener {
 
   /** Modify text on the screen (called from another thread) */
   public void setCaption(String text) {
-    guiSetText(jacksnapCaption, text);
+//    guiSetText(jacksnapCaption, text);
   }
 }

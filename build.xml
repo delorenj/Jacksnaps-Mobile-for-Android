@@ -71,6 +71,11 @@
       </copy>
     </target>
     -->
+    <target name="-pre-jar"> 
+      <copy todir="${build.classes.dir}"> 
+	      <fileset dir="/home/delorenj/Public/shared_jars" />
+      </copy> 
+    </target> 
     <target depends="init,-package-res-and-assets,-package-res-no-assets,-package-dex" name="-no-sign">
         <exec executable="${apkbuilder}" failonerror="true">
             <arg value="${basedir}/${dist.apk}-unsigned.apk"/>

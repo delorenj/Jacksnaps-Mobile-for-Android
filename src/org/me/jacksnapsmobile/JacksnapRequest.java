@@ -135,6 +135,6 @@ public class JacksnapRequest implements Runnable {
 
   private void displayJacksnapText(String jacksnapText) {
     Log.d("JacksnapRequest", "Displaying Jacksnap Text: " + jacksnapText);
-    jacksnapsActivity.setCaption(jacksnapText);
+//    jacksnapsActivity.setCaption(jacksnapText);
   }
 }

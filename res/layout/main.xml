@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res/org.me.jacksnapsmobile"
   android:background="@drawable/bg"
-  android:padding="30dip"
-  android:orientation="horizontal"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent">
-  <LinearLayout
-    android:orientation="vertical"
+  <Button
+    android:id="@+id/fetch_button"
+    android:layout_width="200dp"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:text="@string/fetch_label" />
+  <com.admob.android.ads.AdView
+    android:id="@+id/ad"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center">
-    <Button
-      android:id="@+id/fetch_button"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:text="@string/fetch_label" />
-    <TextView
-      android:id="@+id/jacksnap_caption"
-      android:padding="10dip"
-      android:textSize="18sp"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center" />
-  </LinearLayout>
-</LinearLayout>
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    app:backgroundColor="#000000FF"
+    app:primaryTextColor="#FFFFFFFF"
+    app:secondaryTextColor="#CCCCCCFF"
+    app:keywords="Android" />
+</RelativeLayout>
