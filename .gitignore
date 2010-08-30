@@ -6,7 +6,6 @@ tmp/**/*
 *~.nib
 *~
 *.apk
-*.jar
 *.keystore
 build/**
 build/**/*
