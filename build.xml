@@ -73,7 +73,7 @@
     -->
     <target name="-pre-jar"> 
       <copy todir="${build.classes.dir}"> 
-	      <fileset dir="/home/delorenj/Public/shared_jars" />
+	      <fileset dir="${basedir}/libs" />
       </copy> 
     </target> 
     <target depends="init,-package-res-and-assets,-package-res-no-assets,-package-dex" name="-no-sign">
