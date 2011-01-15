@@ -9,4 +9,12 @@ tmp/**/*
 *.keystore
 build/**
 build/**/*
-
+bin/**
+bin/**/*
+gen/**
+gen/**/*
+.classpath
+.project
+.settings/**
+.settings/**/*
+default.properties
