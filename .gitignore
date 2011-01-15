@@ -18,3 +18,4 @@ gen/**/*
 .settings/**
 .settings/**/*
 default.properties
+R.java
