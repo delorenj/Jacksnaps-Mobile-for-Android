@@ -6,7 +6,10 @@
 package org.me.jacksnapsmobile;
 
 import android.media.MediaPlayer;
+import android.os.Handler;
+
 import java.io.BufferedReader;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -27,7 +30,7 @@ import java.util.Random;
  * @author delorenj
  */
 public class JacksnapRequest implements Runnable {
-  private static final String TAG = "JacksnapRequest";
+  private static final String TAG = "JacksnapsRequestThread";
   private final JacksnapsActivity jacksnapsActivity;
   private int jacksnapId;
   private MediaPlayer mp;
@@ -38,10 +41,9 @@ public class JacksnapRequest implements Runnable {
   }
 
   public void run() {
+		deleteJacksnaps();	//Delete old Jacksnap files
     String jacksnapAudio = getJacksnapAudio();
-    String jacksnapText = getJacksnapText(this.jacksnapId);
     playJacksnapAudio(jacksnapAudio);
-    displayJacksnapText(jacksnapText);
   }
 
   private int getNumHostedJacksnaps() {
@@ -88,6 +90,7 @@ public class JacksnapRequest implements Runnable {
 			if (stream == null){
 				throw new RuntimeException("stream is null");
       }
+			
       if(jacksnapSoundFile != null) {
         Log.d(TAG,"Jacksnap Audio file already initialized");
         if(jacksnapSoundFile.exists()) {
@@ -121,6 +124,20 @@ public class JacksnapRequest implements Runnable {
 		}
 	}
 
+	private void deleteJacksnaps() {
+		File sdcard = new File("/sdcard");
+		FilenameFilter tempfiles = new FilenameFilter() {
+			public boolean accept(File dir, String filename) {
+				return (filename.startsWith("jacksnap") && filename.endsWith(".tmp"));
+			}				
+		};
+		File[] snaps = sdcard.listFiles(tempfiles);
+		for(File s : snaps) {
+			Log.i(TAG,"Deleting Jacksnap: " + s.getName());
+			s.delete();
+		}
+	}
+
   private void playJacksnapAudio(String audioPath) {
     try {
       mp = new MediaPlayer();
@@ -131,10 +148,5 @@ public class JacksnapRequest implements Runnable {
     } catch(java.io.IOException e) {
       Log.e(TAG, "Error preparing Jacksnap audio!: " + e);
     }
-  }
-
-  private void displayJacksnapText(String jacksnapText) {
-    Log.d("JacksnapRequest", "Displaying Jacksnap Text: " + jacksnapText);
-//    jacksnapsActivity.setCaption(jacksnapText);
   }
 }
