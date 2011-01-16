@@ -1,5 +1,7 @@
 
-package org.me.jacksnapsmobile;
+package epc.labs.jacksnaps;
+
+import epc.labs.jacksnaps.R;
 
 import android.app.Activity;
 import android.os.Bundle;

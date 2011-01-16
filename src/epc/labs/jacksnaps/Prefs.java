@@ -3,7 +3,9 @@
  * and open the template in the editor.
  */
 
-package org.me.jacksnapsmobile;
+package epc.labs.jacksnaps;
+
+import epc.labs.jacksnaps.R;
 
 import android.preference.PreferenceActivity;
 import android.os.Bundle;

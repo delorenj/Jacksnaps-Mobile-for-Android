@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package org.me.jacksnapsmobile;
+package epc.labs.jacksnaps;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -15,12 +15,13 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
-import com.admob.android.ads.AdManager;
+
+import epc.labs.jacksnaps.R;
+//import com.admob.android.ads.AdManager;
 /**
  *
  * @author delorenj
@@ -37,7 +38,7 @@ public class JacksnapsActivity extends Activity implements OnClickListener {
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
     setContentView(R.layout.main);
-    AdManager.setTestDevices( new String[] { "9237AEAE1FEDAD90E738A5776A8B07D7" } );
+//    AdManager.setTestDevices( new String[] { "9237AEAE1FEDAD90E738A5776A8B07D7" } );
     initThreading();
     findViews();
     setListeners();
@@ -92,10 +93,6 @@ public class JacksnapsActivity extends Activity implements OnClickListener {
       public void run() {
         // Get text to translate
         if (jacksnapRequestPending != null) {
-          if(jacksnapRequestPending.isDone()) {
-          	Log.i(TAG, "DONE!: Delete file or something...");
-
-          }
           Log.i(TAG, "Cancelling future request...");
           jacksnapRequestPending.cancel(true);
         }

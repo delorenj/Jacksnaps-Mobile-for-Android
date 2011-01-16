@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res/org.me.jacksnapsmobile"
-  android:background="@drawable/bg"
+  xmlns:app="http://schemas.android.com/apk/res/epc.labs.jacksnaps"
+  android:background="@drawable/hires"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent">
   <Button
     android:id="@+id/fetch_button"
     android:layout_width="200dp"
     android:layout_height="wrap_content"
-    android:layout_centerInParent="true"
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="55dip"
     android:text="@string/fetch_label" />
   <com.admob.android.ads.AdView
     android:id="@+id/ad"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
+    android:layout_alignParentTop="true"
     android:layout_centerHorizontal="true"
     app:backgroundColor="#000000FF"
     app:primaryTextColor="#FFFFFFFF"

@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
   <string name="app_name">Jacksnaps</string>
-  <string name="main_title">Oh please Jacksnap me</string>
+  <string name="main_title">Supple Bread-Tractors</string>
   <string name="fetch_label">Don\'t click this...</string>
   <string name="fetch_notice">Fetching Jacksnap...</string>
   <string name="fetch_error">Error Fetching Jacksnap!</string>
-  <string name="about_text">Jacksnaps is snaps, but jacky.
-    You basically don\'t need to know anymore other than Jacksnaps.
-    Thanks.
+  <string name="about_text">With Jacksnaps, you can bake rough stacks of Bruce Hornsby muffins and sell them to mid-western farmers for a healthy profit.
+  For more hot drippings of word salad and horse billiards, visit us as Jacksnaps.com!
   </string>
-  <string name="about_title">About the Jacksnaps</string>
+  <string name="about_title">What are Jacksnaps?</string>
   <string name="settings_label">Settings</string>
   <string name="settings_title">Jacksnap Settings</string>
   <string name="settings_shortcut">s</string>

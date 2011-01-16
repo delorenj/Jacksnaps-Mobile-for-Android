@@ -3,20 +3,12 @@
  * and open the template in the editor.
  */
 
-package org.me.jacksnapsmobile;
+package epc.labs.jacksnaps;
 
 import android.media.MediaPlayer;
-import android.os.Handler;
-
-import java.io.BufferedReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
-import org.json.JSONException;
-import org.json.JSONObject;
 import android.util.Log;
 import android.webkit.URLUtil;
 import java.io.File;
@@ -32,7 +24,6 @@ import java.util.Random;
 public class JacksnapRequest implements Runnable {
   private static final String TAG = "JacksnapsRequestThread";
   private final JacksnapsActivity jacksnapsActivity;
-  private int jacksnapId;
   private MediaPlayer mp;
   private File jacksnapSoundFile;
 
@@ -42,7 +33,7 @@ public class JacksnapRequest implements Runnable {
 
   public void run() {
 		deleteJacksnaps();	//Delete old Jacksnap files
-    String jacksnapAudio = getJacksnapAudio();
+    String jacksnapAudio = downloadRandomJacksnapAudio();
     playJacksnapAudio(jacksnapAudio);
   }
 
@@ -51,7 +42,7 @@ public class JacksnapRequest implements Runnable {
     return 57;
   }
 
-  public String getJacksnapAudio() {
+  public String downloadRandomJacksnapAudio() {
     Log.d(TAG,"Fetching Jacksnap Audio!");
     boolean validAudioFile = false;
     String audioPath = null;
@@ -63,9 +54,8 @@ public class JacksnapRequest implements Runnable {
       try {
         Random rg = new Random();
         int suffix = rg.nextInt(getNumHostedJacksnaps())+1;
-        audioPath = getDataSource("http://jacksnaps.s3.amazonaws.com/js" + suffix + ".mp3");
+        audioPath = downloadJacksnap("http://jacksnaps.s3.amazonaws.com/js" + suffix + ".mp3");
         validAudioFile = true;
-        this.jacksnapId = suffix;
         Log.d(TAG, "Set Data Source: " + audioPath);
       } catch(java.io.IOException e) {
         Log.e(TAG, "Tried to fetch invalid Jacksnap audio file!: " + e);
@@ -74,11 +64,7 @@ public class JacksnapRequest implements Runnable {
     return audioPath;
   }
 
-  private String getJacksnapText(int jacksnapId) {
-    return "This is hot-cous test.";
-  }
-
-  private String getDataSource(String path) throws IOException {
+  private String downloadJacksnap(String path) throws IOException {
 		if (!URLUtil.isNetworkUrl(path)) {
 			return path;
 		} else {
@@ -89,19 +75,6 @@ public class JacksnapRequest implements Runnable {
 			InputStream stream = cn.getInputStream();
 			if (stream == null){
 				throw new RuntimeException("stream is null");
-      }
-			
-      if(jacksnapSoundFile != null) {
-        Log.d(TAG,"Jacksnap Audio file already initialized");
-        if(jacksnapSoundFile.exists()) {
-          Log.d(TAG,"Jacksnaps file found on file system");
-          if(mp != null) {
-            Log.d(TAG,"Releasing MediaPlayer");
-            mp.release();
-          }
-          Log.d(TAG,"Deleting Jacksnap audio file");
-          jacksnapSoundFile.delete();
-        }
       }
       Log.d(TAG,"Creating a Jacksnap audio file");
       jacksnapSoundFile = File.createTempFile("jacksnap",null);
