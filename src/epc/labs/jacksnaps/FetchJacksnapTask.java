@@ -1,42 +1,50 @@
 package epc.labs.jacksnaps;
 
-import android.media.MediaPlayer;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.net.URL;
-import android.util.Log;
-import android.webkit.URLUtil;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.net.URLConnection;
 import java.util.Random;
 
-/**
- *
- * @author delorenj
- */
-public class JacksnapRequest implements Runnable {
-  private static final String TAG = "JacksnapsRequestThread";
-  private final JacksnapsActivity jacksnapsActivity;
+import android.media.MediaPlayer;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.webkit.URLUtil;
+
+public class FetchJacksnapTask extends AsyncTask<String, Integer, Integer> {
+  private static final String TAG = "JacksnapsAsyncTask";
   private MediaPlayer mp;
   private File jacksnapSoundFile;
-
-  JacksnapRequest(JacksnapsActivity jacksnapsActivity) {
-    this.jacksnapsActivity = jacksnapsActivity;
-  }
-
-  public void run() {
+  
+  @Override
+  protected void onPreExecute() {
 		deleteJacksnaps();	//Delete old Jacksnap files
+  }
+  
+	@Override
+	protected Integer doInBackground(String... params) {
     String jacksnapAudio = downloadRandomJacksnapAudio();
-    playJacksnapAudio(jacksnapAudio);
-  }
+    playJacksnapAudio(jacksnapAudio);  			
+		return 0;
+	}
 
-  private int getNumHostedJacksnaps() {
-    //TODO: Implement method to return number of JacksnapsActivity currently served by Amazon CloudFront
-    return 57;
-  }
-
+	private void deleteJacksnaps() {
+		File sdcard = new File("/sdcard");
+		FilenameFilter tempfiles = new FilenameFilter() {
+			public boolean accept(File dir, String filename) {
+				return (filename.startsWith("jacksnap") && filename.endsWith(".tmp"));
+			}				
+		};
+		File[] snaps = sdcard.listFiles(tempfiles);
+		for(File s : snaps) {
+			Log.i(TAG,"Deleting Jacksnap: " + s.getName());
+			s.delete();
+		}
+	}
+	
   public String downloadRandomJacksnapAudio() {
     Log.d(TAG,"Fetching Jacksnap Audio!");
     boolean validAudioFile = false;
@@ -91,21 +99,7 @@ public class JacksnapRequest implements Runnable {
 			return jacksnapSoundFile.getAbsolutePath();
 		}
 	}
-
-	private void deleteJacksnaps() {
-		File sdcard = new File("/sdcard");
-		FilenameFilter tempfiles = new FilenameFilter() {
-			public boolean accept(File dir, String filename) {
-				return (filename.startsWith("jacksnap") && filename.endsWith(".tmp"));
-			}				
-		};
-		File[] snaps = sdcard.listFiles(tempfiles);
-		for(File s : snaps) {
-			Log.i(TAG,"Deleting Jacksnap: " + s.getName());
-			s.delete();
-		}
-	}
-
+  
   private void playJacksnapAudio(String audioPath) {
     try {
       mp = new MediaPlayer();
@@ -117,4 +111,8 @@ public class JacksnapRequest implements Runnable {
       Log.e(TAG, "Error preparing Jacksnap audio!: " + e);
     }
   }
+  private int getNumHostedJacksnaps() {
+    //TODO: Implement method to return number of JacksnapsActivity currently served by Amazon CloudFront
+    return 57;
+  }  
 }

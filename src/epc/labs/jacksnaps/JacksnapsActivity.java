@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package epc.labs.jacksnaps;
 
 import android.app.Activity;
@@ -29,11 +24,7 @@ import epc.labs.jacksnaps.R;
 public class JacksnapsActivity extends Activity implements OnClickListener {
   private View fetchButton;
   private static final String TAG = "Jacksnaps";
-//  private TextView jacksnapCaption;
-  private Handler guiThread;
-  private ExecutorService jacksnapRequestThread;
-  private Runnable updateRequest;
-  private Future<?> jacksnapRequestPending;
+  
   @Override
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
@@ -55,10 +46,7 @@ public class JacksnapsActivity extends Activity implements OnClickListener {
   public void onClick(View v) {
     switch (v.getId()) {
     case R.id.fetch_button:
-      // Cancel previous update if it hasn't started yet
-      guiThread.removeCallbacks(updateRequest);
-      // Start an update if nothing happens after a few milliseconds
-      guiThread.postDelayed(updateRequest, 500);
+    	new FetchJacksnapTask().execute("random");
       break;
     }
   }
@@ -87,21 +75,5 @@ public class JacksnapsActivity extends Activity implements OnClickListener {
   }
 
   private void initThreading() {
-    guiThread = new Handler();
-    jacksnapRequestThread = Executors.newSingleThreadExecutor();
-    updateRequest = new Runnable() {
-      public void run() {
-        // Get text to translate
-        if (jacksnapRequestPending != null) {
-          Log.i(TAG, "Cancelling future request...");
-          jacksnapRequestPending.cancel(true);
-        }
-        try {
-          JacksnapRequest jacksnapRequest = new JacksnapRequest(JacksnapsActivity.this);
-          jacksnapRequestPending = jacksnapRequestThread.submit(jacksnapRequest);
-        } catch (RejectedExecutionException e) {
-        }
-      }
-    };
   }
 }
